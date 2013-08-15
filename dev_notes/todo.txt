@@ -1,0 +1,3 @@
+add db indexing
+
+check for errors durring database save operations

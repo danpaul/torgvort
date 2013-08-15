@@ -16,11 +16,12 @@ class RegisterController extends BaseController {
 	 */
 	function getRegister()
 	{
+
 		return View::make('register');
 	}
 
 	function postRegister()
-	{	
+	{
 		$validation = Validator::make(Input::all(), self::$rules);
 		if($validation->fails())
 		{
