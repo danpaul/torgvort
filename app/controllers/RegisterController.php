@@ -16,7 +16,6 @@ class RegisterController extends BaseController {
 	 */
 	function getRegister()
 	{
-
 		return View::make('register');
 	}
 
@@ -29,8 +28,30 @@ class RegisterController extends BaseController {
 
 		}else{
 			$user = User::createUser();
+			$this->sendEmailVerification($user);
 			return 'success';
 		}
+	}
+
+	function sendEmailVerification($user)
+	{
+		$old_record = EmailValidation::where('email', $user->email)->first();
+		if($old_record){ $old_record->delete(); }
+		$email_validation = new EmailValidation;
+		$email_validation->email = $user->email;
+		$email_validation->token = Hash::make(microtime() . Input::get('email'));
+		$email_validation->save();
+		$data = array('token' => $email_validation->token);
+		//$data = array('token' => $email_validation->token);
+		//Mail::send('emails.report', $data, function($m) use ($team)
+		//$data['foo'] = 'bar';
+		//use ($data)
+		Mail::send('emails.verify', array('token' => $email_validation->token), function($message) use($data)
+		{
+			//$message['token'] = $data->token;
+    		$message->from('email@email.com');//(Config::get('mail.from'));
+		    $message->to('foo@foo.com');//$user->email);
+		});
 	}
 
 }

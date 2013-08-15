@@ -2,12 +2,8 @@
 
 @section('content')
 	<?php
-		//echo( '<h3 class = "error_message">' . Session::get('error', '') . '</h3>' );
-		// echo gettype($errors);
-		// echo $errors;
 		foreach($errors->all() as $message)
 		{
-			//echo $message;
 			echo('<h3 class = "error_message">' . $message . '</h3>');
 		}
 		echo Form::open(array('action' => 'RegisterController@postRegister'));

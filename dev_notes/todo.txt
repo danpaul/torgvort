@@ -1,3 +1,9 @@
 add db indexing
 
 check for errors durring database save operations
+
+release notes:
+
+change mail config to pretend false
+
+update from email address in mail config
